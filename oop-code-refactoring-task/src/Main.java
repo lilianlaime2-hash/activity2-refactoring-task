@@ -1,4 +1,4 @@
-import java.text.MessageFormat;
+
 import java.util.Scanner;
 
 public class Main {
@@ -20,27 +20,49 @@ public class Main {
             System.out.print("Choose an option: ");
             option = Integer.parseInt(sc.nextLine());
 
+            Figure figure = null;
+
             switch(option){
                 case RECTANGLE:
-                    handleRectangle(sc);
+                    double width = readDouble(sc, "Insert width: ");
+                    double height = readDouble(sc, "Insert side height: ");
+                    figure = new Rectangle(width, height);
                     break;
+
                 case CIRCLE:
-                    handleCircle(sc);
+                    double radius = readDouble(sc, "Insert radius: ");
+                    figure = new Circle(radius);
                     break;
+
                 case TRIANGLE:
-                    handleTriangle(sc);
+                    double triangleHeight = readDouble(sc, "Insert height: ");
+                    double base = readDouble(sc, "Insert base: ");
+                    figure = new Triangle(triangleHeight, base);
                     break;
+
                 case SQUARE:
-                    handleSquare(sc);
+                    double side = readDouble(sc, "Insert side: ");
+                    figure = new Square(side);
                     break;
+
                 case SPHERE:
-                    handleSphere(sc);
+                    double sphereRadius = readDouble(sc, "Insert radius: ");
+                    figure = new Sphere(sphereRadius);
                     break;
+
                 case CUBE:
-                    handleCube(sc);
+                    double cubeSide = readDouble(sc, "Insert side: ");
+                    figure = new Cube(cubeSide);
                     break;
+
                 default:
+                    System.out.println("Invalid option. Select a valid number\n");
                     break;
+            }
+
+
+            if (figure != null) {
+                figure.printResults();
             }
         }
     }
@@ -55,64 +77,17 @@ public class Main {
         System.out.println("7. Exit");
     }
 
-    private static void handleRectangle (Scanner sc) {
-            System.out.print("Insert side width: ");
-            int width = Integer.parseInt(sc.nextLine());
-            System.out.print("Insert side height: ");
-            int height = Integer.parseInt(sc.nextLine());
-            int area = width * height;
-            int perimeter = 2 * (width + height);
-            System.out.println("Area: " + area);
-            System.out.println("Perimeter: " + perimeter);
+    private static double readDouble(Scanner sc, String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                String input = sc.nextLine().trim().replace(",", ".");
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number");
+            }
+        }
     }
 
-    private static void handleCircle (Scanner sc) {
-        System.out.println("Insert radius:");
-        int radius = 0;
-        radius = Integer.parseInt(sc.nextLine());
-        double area = Math.PI * radius * radius;
-        System.out.println("Area: " + area);
-        double perimeter = 2 * Math.PI * radius;
-        System.out.println("Perimeter: " + perimeter);
-    }
-
-    private static void handleTriangle(Scanner sc){
-        System.out.println("Insert height");
-        int height = Integer.parseInt(sc.nextLine());
-        System.out.print("Insert base");
-        int base = Integer.parseInt(sc.nextLine());
-        double area = 0.5 * base * height;
-        System.out.println("Area:" + area);
-        int perimeter = 2 * (height + base);
-        System.out.println(MessageFormat.format("Perimeter:{0}", perimeter));
-    }
-    private static void handleSquare(Scanner sc) {
-        System.out.println("Insert side");
-        int side = Integer.parseInt(sc.nextLine());
-        int area = side * side;
-        System.out.println("Area: " + area);
-        int perimeter = 4 * side;
-        System.out.println("Perimeter: " + perimeter);
-    }
-
-    private static void handleSphere(Scanner sc) {
-        System.out.print("Insert radius: ");
-        int radius = Integer.parseInt(sc.nextLine());
-        double area = (4 *  Math.PI * radius * radius);
-        System.out.println("Area: " + area);
-        double volume = (4.0 / 3) * Math.PI * Math.pow(radius, 3);
-        System.out.println("Volume: " + volume);
-    }
-
-    private static void handleCube(Scanner sc){
-        System.out.println("Insert side ");
-        int side = 0;
-        side = Integer.parseInt(sc.nextLine());
-        int area = 6 * side * side;
-        int volume = side * side * side;
-        System.out.println("Area: " + area);
-        System.out.println("volume: " + volume);
-    }
-        
 
 }
